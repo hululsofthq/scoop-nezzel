@@ -36,6 +36,20 @@ jobs:
           if (-not $link.LinkType) { throw "portable folder is not persisted" }
           if (-not (Test-Path "$env:USERPROFILE\scoop\persist\nezzel\ovd-portable")) { throw "persist folder missing" }
           scoop list
+      - name: App starts without a SmartScreen prompt
+        shell: pwsh
+        run: |
+          $exe = (Get-ChildItem "$env:USERPROFILE\scoop\apps\nezzel\current\Nezzel_*.exe" | Select-Object -First 1).FullName
+          $zone = Get-Content -Path $exe -Stream Zone.Identifier -ErrorAction SilentlyContinue
+          if ($zone) { throw "the installed exe carries Mark-of-the-Web: $zone" }
+          $p = Start-Process $exe -PassThru
+          Start-Sleep 20
+          $smart = Get-Process | Where-Object { $_.ProcessName -match 'CHXSmartScreen' }
+          $alive = Get-Process | Where-Object { $_.ProcessName -match 'ezzel' }
+          "smartscreen dialog: $([bool]$smart); app processes: $(@($alive).Count)"
+          if ($smart) { throw "SmartScreen prompt appeared" }
+          if (-not $alive) { throw "the app is not running after 20 s" }
+          $alive | Stop-Process -Force
       - name: Check version detection and autoupdate
         shell: pwsh
         run: |

@@ -1,22 +1,105 @@
-# Nezzel Scoop bucket
+<div align="center">
 
-[![Tests](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/ci.yml) [![Excavator](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/excavator.yml/badge.svg)](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/excavator.yml)
+<img src="https://raw.githubusercontent.com/ahmed-abdat/nezzel-desktop/main/src-tauri/icons/128x128@2x.png" width="96" height="96" alt="Nezzel icon">
 
-[Scoop](https://scoop.sh) bucket for [Nezzel Desktop](https://nezzel.hululsoft.mr/desktop/), a free, open-source app that saves videos, audio and photos from links.
+# Nezzel for Windows, with Scoop
+
+**One command to install. One command to update. No warning screen.**
+
+The [Scoop](https://scoop.sh) bucket for [Nezzel Desktop](https://github.com/ahmed-abdat/nezzel-desktop),<br>
+the free, open-source app that saves videos, audio and photos from links.
+
+[![Scoop version](https://img.shields.io/scoop/v/nezzel?bucket=https%3A%2F%2Fgithub.com%2Fahmed-abdat%2Fscoop-nezzel&style=flat-square&color=006B5E&label=scoop)](bucket/nezzel.json)
+[![Install test](https://img.shields.io/github/actions/workflow/status/ahmed-abdat/scoop-nezzel/install-test.yml?branch=main&style=flat-square&label=install%20test)](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/install-test.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/ahmed-abdat/scoop-nezzel/ci.yml?branch=main&style=flat-square&label=tests)](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/ci.yml)
+[![Auto-update](https://img.shields.io/github/actions/workflow/status/ahmed-abdat/scoop-nezzel/excavator.yml?branch=main&style=flat-square&label=auto-update)](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/excavator.yml)
+
+[Nezzel Desktop](https://github.com/ahmed-abdat/nezzel-desktop) · [Website](https://nezzel.hululsoft.mr/desktop/) · [العربية](#بالعربية) · [Français](#en-français)
+
+<img src="https://raw.githubusercontent.com/ahmed-abdat/nezzel-desktop/main/.github/assets/demo-quickbar.gif" width="528" alt="Nezzel's quick bar opens over another app, reads a copied YouTube link and offers best quality, audio only or 720p">
+
+</div>
 
 ## Install
+
+In PowerShell:
 
 ```pwsh
 scoop bucket add nezzel https://github.com/ahmed-abdat/scoop-nezzel
 scoop install nezzel/nezzel
 ```
 
-## Update
+Then open **Nezzel** from the Start menu, or type `nezzel`.
+
+New to Scoop? It is a command-line installer for Windows. Set it up once, as described on [scoop.sh](https://scoop.sh):
 
 ```pwsh
-scoop update nezzel
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
 
-This installs the portable build. Your settings are kept between updates.
+## Why install this way
 
-Source code, releases and issues: <https://github.com/ahmed-abdat/nezzel-desktop>
+- **No "Windows protected your PC" screen.** Nezzel's installer is not signed with a paid certificate yet, so a normal download shows that warning. A Scoop install does not; the [install test](https://github.com/ahmed-abdat/scoop-nezzel/actions/workflows/install-test.yml) checks this on a clean Windows machine.
+- **Checked download.** Scoop compares the file with the checksum published with each Nezzel release before it installs anything.
+- **No administrator rights.** Everything goes into your own Scoop folder.
+
+## Update and remove
+
+```pwsh
+scoop update nezzel        # get the newest version
+scoop uninstall nezzel     # remove the app, keep your settings
+scoop uninstall -p nezzel  # remove the app and your settings
+```
+
+This bucket looks for a new Nezzel release every four hours and updates itself, so `scoop update nezzel` gives you the new version soon after it is published.
+
+## What you get
+
+| | |
+|---|---|
+| Build | The portable build of Nezzel Desktop, for 64-bit Intel/AMD and ARM64 Windows |
+| Shortcuts | A **Nezzel** entry in the Start menu and a `nezzel` command |
+| Settings | Kept in Scoop's `persist` folder, so they survive updates |
+| Source | The same files as on the [releases page](https://github.com/ahmed-abdat/nezzel-desktop/releases/latest) |
+
+Prefer a normal installer, or use macOS or Linux? See [Nezzel Desktop](https://github.com/ahmed-abdat/nezzel-desktop#install).
+
+## Help
+
+- A problem with the app itself: [Nezzel Desktop issues](https://github.com/ahmed-abdat/nezzel-desktop/issues).
+- A problem with installing or updating through Scoop: [issues here](https://github.com/ahmed-abdat/scoop-nezzel/issues).
+
+## بالعربية
+
+<div dir="rtl">
+
+هذا المستودع يتيح تثبيت Nezzel على Windows بأمر واحد عبر <a href="https://scoop.sh">Scoop</a>، ومن دون شاشة التحذير الزرقاء التي تظهر عند تنزيل المثبّت العادي.
+
+</div>
+
+```pwsh
+scoop bucket add nezzel https://github.com/ahmed-abdat/scoop-nezzel
+scoop install nezzel/nezzel
+```
+
+<div dir="rtl">
+
+للتحديث: <code>scoop update nezzel</code>. تبقى إعداداتك محفوظة بين التحديثات. لمعرفة المزيد عن التطبيق: <a href="https://github.com/ahmed-abdat/nezzel-desktop#بالعربية">Nezzel Desktop</a>.
+
+</div>
+
+## En français
+
+Ce dépôt permet d'installer Nezzel sur Windows en une commande avec [Scoop](https://scoop.sh), sans l'écran d'avertissement bleu qui apparaît avec l'installateur classique.
+
+```pwsh
+scoop bucket add nezzel https://github.com/ahmed-abdat/scoop-nezzel
+scoop install nezzel/nezzel
+```
+
+Pour mettre à jour : `scoop update nezzel`. Vos réglages sont conservés entre les mises à jour. En savoir plus sur l'application : [Nezzel Desktop](https://github.com/ahmed-abdat/nezzel-desktop#en-français).
+
+## License
+
+The files in this bucket are released under the [Unlicense](LICENSE). Nezzel Desktop itself is [AGPL-3.0](https://github.com/ahmed-abdat/nezzel-desktop/blob/main/LICENSE).

@@ -1,3 +1,4 @@
+# Updates the manifest when a new Nezzel release is published.
 name: Excavator
 
 on:

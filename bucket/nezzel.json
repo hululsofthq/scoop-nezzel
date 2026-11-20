@@ -1,0 +1,91 @@
+{
+    "version": "0.1.0",
+    "description": "Free, open-source app that saves videos, audio and photos from links from many sites. Arabic, English, French.",
+    "homepage": "https://nezzel.hululsoft.mr/desktop/",
+    "license": {
+        "identifier": "AGPL-3.0-or-later",
+        "url": "https://github.com/ahmed-abdat/nezzel-desktop/blob/main/LICENSE"
+    },
+    "notes": [
+        "Portable build: settings and downloads state live in the 'ovd-portable' folder (persisted by Scoop).",
+        "Privacy: https://github.com/ahmed-abdat/nezzel-desktop/blob/main/PRIVACY.md",
+        "The app can offer to update itself; prefer 'scoop update nezzel' to keep Scoop's version in sync."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/ahmed-abdat/nezzel-desktop/releases/download/app-v0.1.0/Nezzel_0.1.0_x64-portable.zip",
+            "hash": "0ada7b3bd03c512e7afe4b4603c48bc1bbe7df4e536e52fba6417ba74c1df4d0",
+            "bin": [
+                [
+                    "Nezzel_0.1.0_x64.exe",
+                    "nezzel"
+                ]
+            ],
+            "shortcuts": [
+                [
+                    "Nezzel_0.1.0_x64.exe",
+                    "Nezzel"
+                ]
+            ]
+        },
+        "arm64": {
+            "url": "https://github.com/ahmed-abdat/nezzel-desktop/releases/download/app-v0.1.0/Nezzel_0.1.0_arm64-portable.zip",
+            "hash": "538aa38c6da6441237f9075650f915c0045b9577f3120ea92722a40715307628",
+            "bin": [
+                [
+                    "Nezzel_0.1.0_arm64.exe",
+                    "nezzel"
+                ]
+            ],
+            "shortcuts": [
+                [
+                    "Nezzel_0.1.0_arm64.exe",
+                    "Nezzel"
+                ]
+            ]
+        }
+    },
+    "persist": "ovd-portable",
+    "checkver": {
+        "github": "https://github.com/ahmed-abdat/nezzel-desktop",
+        "regex": "app-v([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/ahmed-abdat/nezzel-desktop/releases/download/app-v$version/Nezzel_$version_x64-portable.zip",
+                "bin": [
+                    [
+                        "Nezzel_$version_x64.exe",
+                        "nezzel"
+                    ]
+                ],
+                "shortcuts": [
+                    [
+                        "Nezzel_$version_x64.exe",
+                        "Nezzel"
+                    ]
+                ]
+            },
+            "arm64": {
+                "url": "https://github.com/ahmed-abdat/nezzel-desktop/releases/download/app-v$version/Nezzel_$version_arm64-portable.zip",
+                "bin": [
+                    [
+                        "Nezzel_$version_arm64.exe",
+                        "nezzel"
+                    ]
+                ],
+                "shortcuts": [
+                    [
+                        "Nezzel_$version_arm64.exe",
+                        "Nezzel"
+                    ]
+                ]
+            }
+        },
+        "hash": {
+            "url": "https://github.com/ahmed-abdat/nezzel-desktop/releases/download/app-v$version/SHA256SUMS",
+            "regex": "$sha256\\s+$basename"
+        }
+    }
+}

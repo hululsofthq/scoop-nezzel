@@ -1,0 +1,49 @@
+name: Install test
+
+on:
+  push:
+    branches: [main]
+    paths: ['bucket/**', '.github/workflows/install-test.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Scoop
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
+          .\install.ps1 -RunAsAdmin
+          "$env:USERPROFILE\scoop\shims" | Out-File -FilePath $env:GITHUB_PATH -Append
+      - name: Install Nezzel from this bucket
+        shell: pwsh
+        run: |
+          scoop install .\bucket\nezzel.json
+          if ($LASTEXITCODE -ne 0) { throw "scoop install failed" }
+      - name: Check the install
+        shell: pwsh
+        run: |
+          $app = "$env:USERPROFILE\scoop\apps\nezzel\current"
+          Get-ChildItem $app | Select-Object Name, Length | Format-Table
+          if (-not (Test-Path "$env:USERPROFILE\scoop\shims\nezzel.exe")) { throw "shim missing" }
+          if (-not (Test-Path "$app\ovd-portable")) { throw "portable folder missing" }
+          $link = Get-Item "$app\ovd-portable"
+          if (-not $link.LinkType) { throw "portable folder is not persisted" }
+          if (-not (Test-Path "$env:USERPROFILE\scoop\persist\nezzel\ovd-portable")) { throw "persist folder missing" }
+          scoop list
+      - name: Check version detection and autoupdate
+        shell: pwsh
+        run: |
+          $out = & "$env:USERPROFILE\scoop\apps\scoop\current\bin\checkver.ps1" -Dir .\bucket -App nezzel -ForceUpdate *>&1 | Out-String
+          $out
+          if ($out -match "couldn't|could not|error|fail") { throw "checkver/autoupdate reported a problem" }
+          git diff --stat
+          git diff --exit-code -- bucket/nezzel.json
+      - name: Uninstall
+        shell: pwsh
+        run: scoop uninstall nezzel
